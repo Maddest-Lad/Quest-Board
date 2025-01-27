@@ -1,3 +1,5 @@
-pillow
-flask
 pytest
+Flask
+Flask-SQLAlchemy
+Flask-Marshmallow
+marshmallow-sqlalchemy

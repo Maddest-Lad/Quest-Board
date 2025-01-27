@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quest Board</title>
+    <script>
+        async function generateQuests() {
+            try {
+                const response = await fetch('/quests/generate', { method: 'POST' });
+                if (response.ok) {
+                    const quests = await response.json();
+                    // alert('Random quests generated successfully!');
+                    // Reload the page to see the updated quest list
+                    location.reload();
+                } else {
+                    const error = await response.json();
+                    alert('Error: ' + error.error);
+                }
+            } catch (err) {
+                console.error('Failed to generate quests:', err);
+                alert('An error occurred while generating quests.');
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Quest Board</h1>
+
+    <!-- Button to generate random quests -->
+    <button onclick="generateQuests()">Generate Random Quests</button>
+
+    <ul>
+        {% for quest in quests %}
+        <li>
+            <strong>{{ quest.name }}</strong> - {{ quest.description }} 
+            ({{ quest.status.value }}) <br>
+            Progress: {{ quest.progress }}%, Priority: {{ quest.priority }}
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
